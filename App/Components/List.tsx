@@ -3,7 +3,7 @@ import {View, FlatList} from 'react-native';
 
 interface IList {
   data: [];
-  _renderItem: (value: any) => JSX;
+  _renderItem: (value: any) => void;
 }
 
 const List = ({data, _renderItem}: IList) => {
@@ -14,7 +14,6 @@ const List = ({data, _renderItem}: IList) => {
         extraData={data}
         renderItem={_renderItem}
         showsVerticalScrollIndicator={false}
-        numColumns={2}
       />
     </View>
   );

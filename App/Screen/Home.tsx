@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from 'react';
+
 import {
   View,
   Text,
@@ -10,8 +11,11 @@ import {
 
 import axios from 'axios';
 import List from '../Components/List';
+import Heading from '../Components/Heading';
+
 
 const {width} = Dimensions.get('window');
+
 
 const Home = () => {
   const [list, setList] = useState([]);
@@ -49,7 +53,7 @@ const Home = () => {
       });
   }, []);
 
-  const _renderItem = ({item}) => {
+  const _renderItem = ({ item }) => {
     return (
       <View style={styles.cardStyle}>
         <Text numberOfLines={1}> Name: {item?.name} </Text>
@@ -70,12 +74,6 @@ const Home = () => {
     );
   };
 
-  const deleteRow = id => {
-    let result = list.filter(data => data.id !== id);
-
-    setList(result);
-  };
-
   const addItem = () => {
     newItem.id = list?.length;
     const updatedList = [...list, newItem];
@@ -84,6 +82,8 @@ const Home = () => {
 
   return (
     <View style={styles.container}>
+<Heading title={'PokeReact'} />;
+
       <View style={styles.listView}>
         <List data={list} _renderItem={_renderItem} />
       </View>
