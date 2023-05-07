@@ -6,16 +6,17 @@ import {
   Pressable,
   Dimensions,
   StyleSheet,
-  TouchableOpacity,
 } from 'react-native';
+import {useSelector, useDispatch} from 'react-redux';
 
-import axios from 'axios';
+
+
 import List from '../Components/List';
+import {fetchPokemonList} from '../redux/service/appService';
+
 import Heading from '../Components/Heading';
 
-
 const {width} = Dimensions.get('window');
-
 
 const Home = () => {
   const [list, setList] = useState([]);
@@ -42,42 +43,23 @@ const Home = () => {
     },
   };
 
+const data = useSelector(state => state.api.data);
+const loading = useSelector(state => state.api.loading);
+const error = useSelector(state => state.api.error);
+const dispatch = useDispatch();
+
   useEffect(() => {
-    axios
-      .get('https://jsonplaceholder.typicode.com/users')
-      .then(res => {
-        setList(res?.data);
-      })
-      .catch(err => {
-        throw err;
-      });
-  }, []);
+    dispatch(fetchPokemonList());
+  }, [dispatch]);
 
   const _renderItem = ({ item }) => {
     return (
       <View style={styles.cardStyle}>
-        <Text numberOfLines={1}> Name: {item?.name} </Text>
-        <Text numberOfLines={1}> Email: {item?.email} </Text>
-        <Text numberOfLines={1}>
-          {' '}
-          Street: {item?.id === 2
-            ? 'Changed Street'
-            : item?.address?.street}{' '}
-        </Text>
+<Text numberOfLines={1}> Name: {item?.name} </Text>;
 
-        <TouchableOpacity
-          style={styles.deleteButton}
-          onPress={() => deleteRow(item?.id)}>
-          <Text style={styles.btnText}> Delete </Text>
-        </TouchableOpacity>
+
       </View>
     );
-  };
-
-  const addItem = () => {
-    newItem.id = list?.length;
-    const updatedList = [...list, newItem];
-    setList(updatedList);
   };
 
   return (
@@ -87,9 +69,6 @@ const Home = () => {
       <View style={styles.listView}>
         <List data={list} _renderItem={_renderItem} />
       </View>
-      <Pressable style={styles.addBtnStyle} onPress={addItem}>
-        <Text style={styles.btnText}> Add Item </Text>
-      </Pressable>
     </View>
   );
 };
