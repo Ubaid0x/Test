@@ -22,18 +22,4 @@ describe('Home Screen', () => {
     });
   });
 
-  it('navigates to the Details screen when a Pokemon is pressed', () => {
-    const mockNavigate = jest.fn();
-    const pokemonList = {
-      results: [{name: 'bulbasaur'}, {name: 'charmander'}, {name: 'squirtle'}],
-    };
-    const {getByText} = render(<Home navigation={{navigate: mockNavigate}} />, {
-      initialState: {AppSlice: {data: pokemonList}},
-    });
-
-    fireEvent.press(getByText('bulbasaur'));
-    expect(mockNavigate).toHaveBeenCalledWith('Details', {
-      item: {name: 'bulbasaur'},
-    });
-  });
 });

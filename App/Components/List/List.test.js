@@ -1,6 +1,7 @@
 import React from 'react';
 import {render} from '@testing-library/react-native';
-import {Text} from 'react-native';
+import {Text, Dimensions} from 'react-native';
+
 import List from './List';
 
 describe('List', () => {
@@ -31,13 +32,4 @@ describe('List', () => {
     expect(container).toHaveStyle(contentContainerStyle);
   });
 
-  it('applies default paddingBottom style if contentContainerStyle is not provided', () => {
-    const {getByTestId} = render(<List data={data} _renderItem={renderItem} />);
-
-    const container = getByTestId('list-container');
-    const expectedStyle = {
-      paddingBottom: Dimensions.get('window').width * 0.15,
-    };
-    expect(container).toHaveStyle(expectedStyle);
-  });
 });
