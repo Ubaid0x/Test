@@ -1,25 +1,36 @@
 import {createSlice} from '@reduxjs/toolkit';
 
-import {fetchTodos} from '../service/appService';
+import {fetchPokemonList, fetchPokemonDetail} from '../service/appService';
 
-const todosSlice = createSlice({
-  name: 'todos',
-  initialState: {data: [], status: 'idle', error: null},
+const listSlice = createSlice({
+  name: 'List',
+  initialState: {data: [], details: {}, status: 'idle', error: null},
   reducers: {},
   extraReducers: builder => {
     builder
-      .addCase(fetchTodos.pending, state => {
+      .addCase(fetchPokemonList.pending, state => {
         state.status = 'loading';
       })
-      .addCase(fetchTodos.fulfilled, (state, action) => {
+      .addCase(fetchPokemonList.fulfilled, (state, action) => {
         state.status = 'succeeded';
         state.data = action.payload;
       })
-      .addCase(fetchTodos.rejected, (state, action) => {
+      .addCase(fetchPokemonList.rejected, (state, action) => {
+        state.status = 'failed';
+        state.error = action.error.message;
+      })
+      .addCase(fetchPokemonDetail.pending, state => {
+        state.status = 'loading';
+      })
+      .addCase(fetchPokemonDetail.fulfilled, (state, action) => {
+        state.status = 'succeeded';
+        state.details = action.payload;
+      })
+      .addCase(fetchPokemonDetail.rejected, (state, action) => {
         state.status = 'failed';
         state.error = action.error.message;
       });
   },
 });
 
-export default todosSlice.reducer;
+export default listSlice.reducer;

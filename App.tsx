@@ -7,7 +7,8 @@
 
 import React from 'react';
 import {SafeAreaView, StatusBar, useColorScheme} from 'react-native';
-import Home from './App/Screen/Home';
+import Home from './App/Screen/Home/Home';
+
 
 function App(): JSX.Element {
   return (
